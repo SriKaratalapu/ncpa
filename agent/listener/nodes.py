@@ -360,7 +360,7 @@ class RunnableNode(ParentNode):
         #Update the pickled data
         logging.debug('Updating pickle for %s. Filename is %s.', accessor, tmpfile)
         with open(tmpfile, 'w') as values_file:
-            pickle.dump(values, str(values_file))
+            pickle.dump(str(values), values_file)
 
         #Calculate the return value and return it
         delta = time.time() - last_modified
