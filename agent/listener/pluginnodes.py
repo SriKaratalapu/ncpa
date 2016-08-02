@@ -1,12 +1,12 @@
 import os
 import logging
-import nodes
-import ConfigParser
+from listener import nodes
+import configparser
 import subprocess
 import shlex
 import re
 import copy
-import Queue
+import queue
 from threading import Timer
 
 class PluginNode(nodes.RunnableNode):
@@ -133,4 +133,4 @@ class PluginAgentNode(nodes.ParentNode):
 
     def walk(self, *args, **kwargs):
         self.setup_plugin_children(kwargs['config'])
-        return { self.name: self.children.keys() }
+        return { self.name: list(self.children.keys()) }

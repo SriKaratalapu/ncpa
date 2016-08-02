@@ -280,7 +280,7 @@ def main():
             return show_list(info_json)
         else:
             return run_check(info_json)
-    except Exception, e:
+    except Exception as e:
         if options.debug:
             return 'The stack trace:' + traceback.format_exc(), 3
         elif options.verbose:

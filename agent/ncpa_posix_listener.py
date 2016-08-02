@@ -70,7 +70,7 @@ class Listener(ncpadaemon.Daemon):
                                      spawn=Pool(200),
                                      **ssl_context)
             http_server.serve_forever()
-        except Exception, e:
+        except Exception as e:
             logging.exception(e)
 
 if __name__ == u'__main__':

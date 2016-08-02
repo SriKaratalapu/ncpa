@@ -1,7 +1,7 @@
 import unittest
 import platform
 from ncpacheck import NCPACheck as nc
-import ConfigParser as configparser
+import configparser as configparser
 import os
 import json
 import listener.server

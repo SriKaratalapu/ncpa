@@ -54,7 +54,7 @@ class ParentNode(object):
 
     def walk(self, *args, **kwargs):
         stat = {}
-        for name, child in self.children.iteritems():
+        for name, child in self.children.items():
             try:
                 if kwargs.get('first', None) is None:
                     kwargs['first'] = False
@@ -84,7 +84,7 @@ class RunnableParentNode(ParentNode):
     def run_check(self, *args, **kwargs):
         primary_info = {}
         secondary_results = []
-        for name, child in self.children.iteritems():
+        for name, child in self.children.items():
             if name in self.include:
                 if name == self.primary:
                     primary_info  = child.run_check(use_prefix=True,
@@ -360,7 +360,7 @@ class RunnableNode(ParentNode):
         #Update the pickled data
         logging.debug('Updating pickle for %s. Filename is %s.', accessor, tmpfile)
         with open(tmpfile, 'w') as values_file:
-            pickle.dump(values, values_file)
+            pickle.dump(values, str(values_file))
 
         #Calculate the return value and return it
         delta = time.time() - last_modified

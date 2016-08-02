@@ -1,7 +1,6 @@
 import logging
 import json
 import urllib
-import urlparse
 import listener.server
 
 
@@ -211,9 +210,9 @@ class NCPACheck(object):
 
     @staticmethod
     def parse_api_url_style_instruction(instruction):
-        parse = urlparse.urlparse(instruction)
+        parse = urllib.parse(instruction)
 
         api_url = parse.path
-        api_args = {x: v[0] for x, v in urlparse.parse_qs(parse.query).items()}
+        api_args = {x: v[0] for x, v in urllib.parse.parse_qs(parse.query).items()}
 
         return api_url, api_args

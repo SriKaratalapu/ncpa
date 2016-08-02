@@ -1,9 +1,7 @@
 import xml.dom.minidom
 import logging
-import nagioshandler
-import utils
-from itertools import izip
-import ConfigParser
+from passive import nagioshandler, utils
+import configparser
 import listener.server
 
 
@@ -36,7 +34,7 @@ class Handler(nagioshandler.NagiosHandler):
         doc = xml.dom.minidom.Document()
         element = doc.createElement(tag_name)
         if tag_attr:
-            for k, v in izip(list(tag_attr.keys()), list(tag_attr.values())):
+            for k, v in zip(list(tag_attr.keys()), list(tag_attr.values())):
                 element.setAttribute(unicode(k), unicode(v))
         if text:
             text_node = doc.createTextNode(text.strip())

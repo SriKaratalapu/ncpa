@@ -1,5 +1,5 @@
 import re
-from urllib import unquote
+import urllib.parse
 from geventwebsocket.handler import WebSocketHandler
 from gevent.pywsgi import Input
 
@@ -20,7 +20,7 @@ class PatchedWSGIHandler(WebSocketHandler):
         if not decode_slashes:
             path = re.sub(r'%2f', '%252F', path, flags=re.I)
 
-        env['PATH_INFO'] = unquote(path)
+        env['PATH_INFO'] = urllib.parse.unquote(path)
         env['QUERY_STRING'] = query
 
         if self.headers.typeheader is not None:

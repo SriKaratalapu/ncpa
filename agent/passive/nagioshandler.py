@@ -1,6 +1,6 @@
 import logging
 import platform
-import ncpacheck
+import passive.ncpacheck
 
 
 class NagiosHandler(object):

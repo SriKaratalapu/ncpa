@@ -2,12 +2,13 @@ from __future__ import with_statement
 import sys
 import xml.etree.ElementTree as ET
 from passive.nagioshandler import NagiosHandler
-import utils
+from passive import utils
 import tempfile
 import re
 import logging
 import os
-import ConfigParser
+import configparser
+import stat
 
 
 class Handler(NagiosHandler):
@@ -68,7 +69,7 @@ class Handler(NagiosHandler):
         try:
             with open(plugin_abs_path, 'wb') as plugin_file:
                 plugin_file.write(url_request)
-                os.chmod(plugin_abs_path, 0775)
+                os.chmod(plugin_abs_path, stat.S_IWRITE)
         except Exception as exc:
             logging.error('Could not write the plugin to %s: %r', plugin_abs_path, exc)
 

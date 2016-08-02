@@ -5,7 +5,7 @@ python application on Unix systems.
 
 VERSION = (2, 0, 0)
 
-import ConfigParser
+import configparser
 import errno
 import glob
 import grp
@@ -109,7 +109,7 @@ class Daemon(object):
 
         try:
             self.uid, self.gid = list(imap(int, get_uid_gid(cp, self.section)))
-        except ValueError, e:
+        except ValueError as e:
             sys.exit(unicode(e))
 
         self.logmaxmb = int(cp.get(self.section, u'logmaxmb'))
@@ -363,7 +363,7 @@ def daemonize():
     for i in xrange(3):
         try:
             os.dup2(null, i)
-        except OSError, e:
+        except OSError as e:
             if e.errno != errno.EBADF:
                 raise
     os.close(null)

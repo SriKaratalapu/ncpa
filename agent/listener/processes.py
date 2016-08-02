@@ -1,5 +1,5 @@
 import psutil
-import nodes
+from listener import nodes
 
 
 class ProcessNode(nodes.LazyNode):

@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest import skip
 from nrdp import Handler as nrdp
-import ConfigParser
+import configparser
 import xml.etree.ElementTree as ET
 import ncpacheck
 import listener.server

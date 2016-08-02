@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest import skip
 from nrds import Handler as n
-import ConfigParser
+import configparser
 import os
 import utils
 import tempfile

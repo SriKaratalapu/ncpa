@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import nodes
+from listener import nodes
 import win32pdh
 import time
 import os

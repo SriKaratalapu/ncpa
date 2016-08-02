@@ -1,11 +1,11 @@
 from flask import Flask, render_template, redirect, request, url_for, jsonify, Response, session
 import logging
-import urllib
+import urllib.parse
 import os
 import sys
 import platform
 import requests
-import psapi
+from listener import psapi
 import functools
 import jinja2
 import datetime
@@ -44,7 +44,7 @@ listener.jinja_env.line_statement_prefix = '#'
 
 def make_info_dict():
     now = datetime.datetime.now()
-    uptime = unicode(now - __STARTED__)
+    uptime = str(now - __STARTED__)
     uptime = uptime.split('.', 1)[0]
 
     return {'agent_version': __VERSION__,
@@ -176,7 +176,7 @@ def gui_index():
     info = make_info_dict()
     try:
         return render_template('gui/dashboard.html', **info)
-    except Exception, e:
+    except Exception as e:
         logging.exception(e)
 
 
@@ -365,7 +365,7 @@ def tail(accessor=None):
             'tail_hash': hash(accessor)}
 
     query_string = request.query_string
-    info['query_string'] = urllib.quote(query_string)
+    info['query_string'] = urllib.parse.quote(query_string)
 
     return render_template('tail.html',
                            **info)
@@ -397,7 +397,7 @@ def graph(accessor=None):
 
     info['graph_prop'] = prop
     query_string = request.query_string
-    info['query_string'] = urllib.quote(query_string)
+    info['query_string'] = urllib.parse.quote(query_string)
 
     return render_template('graph.html',
                            **info)
@@ -553,6 +553,6 @@ def api(accessor=''):
     else:
         value = node.walk(**sane_args)
 
-    return Response(json.dumps(dict(value),
+    return Response(json.dumps(value,
                     indent=None if request.is_xhr else 4),
                     mimetype='application/json')

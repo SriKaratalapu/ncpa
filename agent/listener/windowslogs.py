@@ -47,7 +47,7 @@ adaptation of the input Logged After specification.
 """
 
 import logging
-import nodes
+from listener import nodes
 import datetime
 import win32evtlog
 import re

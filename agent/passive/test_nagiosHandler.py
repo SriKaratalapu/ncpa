@@ -1,5 +1,5 @@
 from unittest import TestCase
-from ConfigParser import ConfigParser
+from ConfigParser import configparser
 from nagioshandler import NagiosHandler as nh
 import ncpacheck
 

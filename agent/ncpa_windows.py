@@ -6,9 +6,8 @@ are called.
 """
 
 import cx_Logging
-import cx_Threads
 import threading
-import ConfigParser
+import configparser
 import glob
 import logging
 import logging.handlers
@@ -40,7 +39,7 @@ class Base(object):
     # configuration file and handled in the Initialize() method
     def __init__(self, debug=False):
         logging.getLogger().handlers = []
-        self.stopEvent = cx_Threads.Event()
+        self.stopEvent = threading.Event()
         self.debug = debug
 
     def determine_relative_filename(self, file_name, *args, **kwargs):
@@ -59,7 +58,7 @@ class Base(object):
         return os.path.abspath(os.path.join(appdir, file_name))
 
     def parse_config(self, *args, **kwargs):
-        self.config = ConfigParser.ConfigParser()
+        self.config = configparser.ConfigParser()
         self.config.optionxform = str
         self.config.read(self.config_filenames)
 
@@ -134,7 +133,7 @@ class Listener(Base):
             listener.server.listener.tail_method = listener.windowslogs.tail_method
             listener.server.listener.config['iconfig'] = self.config
 
-            ssl_str_version = self.config.get('listener', 'ssl_version', 'TLSv1')
+            ssl_str_version = self.config.get('listener', 'ssl_version', fallback='TLSv1')
 
             try:
                 ssl_version = getattr(ssl, 'PROTOCOL_' + ssl_str_version)
@@ -164,7 +163,7 @@ class Listener(Base):
                                      spawn=Pool(200),
                                      **ssl_context)
             http_server.serve_forever()
-        except Exception, e:
+        except Exception as e:
             logging.exception(e)
 
     # called when the service is starting
@@ -202,7 +201,7 @@ class Passive(Base):
                 module_name = 'passive.%s' % handler
                 __import__(module_name)
                 tmp_handler = sys.modules[module_name]
-            except ImportError, e:
+            except ImportError as e:
                 logging.error('Could not import module passive.%s, skipping. %s' % (handler, str(e)))
                 logging.exception(e)
             else:
@@ -210,7 +209,7 @@ class Passive(Base):
                     ins_handler = tmp_handler.Handler(self.config)
                     ins_handler.run()
                     logging.debug('Successfully ran handler %s' % handler)
-                except Exception, e:
+                except Exception as e:
                     logging.exception(e)
 
     # Actual method that loops doing passive checks forever, using the sleep
@@ -240,7 +239,7 @@ class Passive(Base):
                 self.run_all_handlers()
                 wait_time = self.config.getint('passive', 'sleep')
                 time.sleep(wait_time)
-        except Exception, e:
+        except Exception as e:
             logging.exception(e)
 
     # Called when the service is starting to initiate variables required by the main
