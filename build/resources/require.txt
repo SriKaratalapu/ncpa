@@ -1,3 +1,4 @@
+cx_Freeze
 psutil
 requests
 Jinja2

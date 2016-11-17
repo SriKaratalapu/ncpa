@@ -7,8 +7,6 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PYTHONTAR="Python-2.7.12"
 PYTHONVER="python2.7"
-CXFREEZETAR="cx_Freeze-4.3.4-patched"
-CXFREEZEVER="cx_Freeze-4.3.4"
 GWEBSOCKETTAR="gevent-websocket-0.9.5-patched"
 GWEBSOCKETVER="gevent-websocket-0.9.5"
 CXLOGGINGVER="cx_Logging-2.1"
@@ -32,12 +30,6 @@ cd $PYTHONTAR && ./configure --with-zlib=/usr/include --enable-shared && make &&
 echo '/usr/local/lib' >> /etc/ld.so.conf 
 /sbin/ldconfig
 
-# Install the patched version of cx_Freeze
-cd ..
-tar xf $CXFREEZETAR.tar.gz
-cd $CXFREEZEVER
-$PYTHONBIN setup.py install
-
 # Install cx_Logging
 cd ..
 tar xf $CXLOGGINGVER.tar.gz
@@ -58,7 +50,6 @@ $PYTHONBIN setup.py install
 
 # Clean up resource directory
 rm -rf $PYTHONTAR
-rm -rf $CXFREEZEVER
 rm -rf $CXLOGGINGVER
 rm -rf $CXPYGENLIBVER
 rm -rf $GWEBSOCKETVER
